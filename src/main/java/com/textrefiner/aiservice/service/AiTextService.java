@@ -23,12 +23,19 @@ public class AiTextService {
     public List<String> refineText(String rawText, String relation) {
 
         // [프롬프트 엔지니어링 업그레이드] 5가지 버전을 요구
-        String prompt = "너는 친절하고 전문적인 텍스트 교정기야. " +
-                "사용자가 입력한 문장을 [" + relation + "]에게 보내는 상황에 맞게 가장 자연스럽고 적절한 톤앤매너로 다듬어서 딱 5가지 버전을 제안해줘. " +
-                "각 버전은 약간씩 다른 뉘앙스를 가지면 좋아. " +
-                "주의사항: 인사말이나 부가적인 설명은 절대 하지 말고, 각 문장을 줄바꿈(엔터)으로만 구분해서 출력해. " +
-                "문장 앞에 번호나 기호도 붙이지 마.\n\n" +
-                "원본 문장: " + rawText;
+        String prompt = "너는 텍스트 톤앤매너 교정 전문가야.\n" +
+                "사용자가 입력한 [원본 문장]을 [" + relation + "]에게 보내는 상황에 맞춰 다듬어줘.\n" +
+                "반드시 아래 5가지 컨셉으로 각각 1개씩, 총 5개의 문장을 제안해.\n\n" +
+                "1. 정중하고 격식 있는 톤\n" +
+                "2. 부드럽고 친근한 톤\n" +
+                "3. 핵심만 짚는 간결한 톤\n" +
+                "4. 조심스럽고 우회적인 톤\n" +
+                "5. 약간의 위트나 센스를 더한 톤\n\n" +
+                "[출력 필수 규칙 - 반드시 지킬 것]\n" +
+                "- 인사말, 부가 설명, '네, 다듬어보았습니다' 같은 사족 절대 금지\n" +
+                "- 문장 앞에 번호(1., 2.), 기호(-, *), 컨셉 이름 등 어떠한 문자도 절대 붙이지 말것\n" +
+                "- 5개의 문장은 오직 줄바꿈(엔터)으로만 구분해서 순수 텍스트만 출력할 것\n\n" +
+                "[원본 문장]: " + rawText;
 
         GeminiRequest.Part part = GeminiRequest.Part.builder().text(prompt).build();
         GeminiRequest.Content content = GeminiRequest.Content.builder().parts(List.of(part)).build();

@@ -22,6 +22,11 @@ public class AiTextService {
 
     public List<String> refineText(String rawText, String relation) {
 
+        // 빈 값이거나 너무 짧은 문장 차단
+        if (rawText == null || rawText.trim().length() < 2) {
+            throw new IllegalArgumentException("다듬을 문장이 너무 짧습니다. 2글자 이상 입력해주세요.");
+        }
+
         // [프롬프트 엔지니어링 업그레이드] 5가지 버전을 요구
         String prompt = "너는 텍스트 톤앤매너 교정 전문가야.\n" +
                 "사용자가 입력한 [원본 문장]을 [" + relation + "]에게 보내는 상황에 맞춰 다듬어줘.\n" +

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,5 +41,15 @@ public class GlobalExceptionHandler {
                 e.getMessage()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 4. 주소를 잘못 입력했을 때 (404 Not Found) 예외 처리
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException e) {
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(), // 404 에러
+                "요청하신 주소를 찾을 수 없습니다. 주소를 다시 확인해주세요."
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

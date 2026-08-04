@@ -9,8 +9,8 @@ spring:
       client:
         config:
           default:
-            connectTimeout: 3000  # 구글 서버와 연결할 때 최대 3초 대기
-            readTimeout: 10000    # 구글이 답변을 줄 때까지 최대 10초 대기
+            connectTimeout: 10000  # 구글 서버와 연결할 때 최대 10초 대기
+            readTimeout: 30000    # 구글이 답변을 줄 때까지 최대 30초 대기
 
 eureka:
   client:
